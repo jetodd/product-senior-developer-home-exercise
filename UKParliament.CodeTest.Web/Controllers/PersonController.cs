@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
 using UKParliament.CodeTest.Web.ViewModels;
 
@@ -9,9 +11,11 @@ namespace UKParliament.CodeTest.Web.Controllers;
 public class PersonController : ControllerBase
 {
     private readonly IPersonService _personService;
+     private readonly IMapper _mapper;
 
-    public PersonController(IPersonService personService) {
+    public PersonController(IPersonService personService, IMapper mapper) {
         _personService = personService;
+        _mapper = mapper;
     }
 
     [Route("{id:int}")]
@@ -30,7 +34,10 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult AddPerson() {
+    public ActionResult AddPerson(PersonViewModel person) {
+        var personToAdd = _mapper.Map<Person>(person);
+
+        _personService.AddPerson(personToAdd);
         return NoContent();
     }
 

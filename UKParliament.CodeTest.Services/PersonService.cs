@@ -25,11 +25,16 @@ public class PersonService : IPersonService
 
     public void AddPerson(Person person)
     {
-        throw new NotImplementedException();
+        _dbcontext.People.Add(person);
+        _dbcontext.SaveChanges();
     }
 
     public void UpdatePerson(Person person)
     {
-        throw new NotImplementedException();
+        if (_dbcontext.People.Any(e => e.Id == person.Id))
+        {
+            _dbcontext.People.Update(person);
+            _dbcontext.SaveChanges();
+        }
     }
 }

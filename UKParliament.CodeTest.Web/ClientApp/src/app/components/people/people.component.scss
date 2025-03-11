@@ -7,6 +7,24 @@
     margin-bottom: 5px;
 }
 
+.btn {
+    border: 2px solid #3569cc;
+    padding: 5px 17px;
+    min-width: 100px;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #3569cc;
+}
+
+.btn-primary {
+    background-color: #3569cc;
+    padding: 7px 17px 4px 17px;
+    border: none;
+    border-bottom: 3px solid #214282;
+}
+
 .error-message {
     font-size: 1rem;
     line-height: 1.25;

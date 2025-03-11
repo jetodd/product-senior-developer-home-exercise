@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
+using UKParliament.CodeTest.Web.ViewModels;
 
 namespace UKParliament.CodeTest.Web;
 
@@ -18,6 +20,14 @@ public class Program
 
         builder.Services.AddScoped<IPersonService, PersonService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new MappingProfile());
+        });
+
+        IMapper mapper = mapperConfig.CreateMapper();
+        builder.Services.AddSingleton(mapper);
 
         var app = builder.Build();
 

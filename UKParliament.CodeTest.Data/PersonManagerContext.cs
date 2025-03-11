@@ -26,8 +26,8 @@ public class PersonManagerContext : DbContext
 
         modelBuilder.Entity<Person>()
             .HasData(
-                new { Id = 1, FirstName = "Hello",  LastName = "World", DateOfBirth = DateTime.Now.AddYears(-20), DepartmentId = 1 },
-                new { Id = 2, FirstName = "Theodore", LastName = "Noodle", DateOfBirth = DateTime.Now.AddYears(-3), DepartmentId = 2 }
+                new { Id = 1, FirstName = "Hello",  LastName = "World", DepartmentId = 1, DateOfBirth = DateTime.Now.AddYears(-20) },
+                new { Id = 2, FirstName = "Theodore", LastName = "Noodle",  DepartmentId = 2, DateOfBirth = DateTime.Now.AddYears(-3) }
             );
     }
 
