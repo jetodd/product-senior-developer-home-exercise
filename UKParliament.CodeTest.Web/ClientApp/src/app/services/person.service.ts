@@ -13,4 +13,16 @@ export class PersonService {
   getById(id: number): Observable<PersonViewModel> {
     return this.http.get<PersonViewModel>(this.baseUrl + `api/person/${id}`)
   }
+
+  getPeople(): Observable<PersonViewModel[]> {
+    return this.http.get<PersonViewModel[]>(this.baseUrl + `api/person`)
+  }
+
+  addPerson(person: PersonViewModel) {
+    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, person);
+  }
+
+  updatePerson(person: PersonViewModel) {
+    this.http.put<PersonViewModel>(this.baseUrl + `api/person/${person.id}`, person);
+  }
 }
