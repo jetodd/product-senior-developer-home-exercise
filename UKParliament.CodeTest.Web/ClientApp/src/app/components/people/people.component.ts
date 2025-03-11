@@ -3,6 +3,7 @@ import { PersonService } from '../../services/person.service';
 import { PersonViewModel } from 'src/app/models/person-view-model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
+import { dateValidator } from 'src/app/validators/date-of-birth.validator';
 
 @Component({
   selector: 'app-people',
@@ -27,7 +28,7 @@ export class PeopleComponent {
     this.personForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      // dateOfBirth: '',
+      dateOfBirth: new FormControl('', [Validators.required, dateValidator()]),
       department: new FormControl('', [Validators.required]),
     });
   }
@@ -39,15 +40,21 @@ export class PeopleComponent {
   }
 
   submit() {
+    const person = this.personForm.getRawValue();
     this.submitted.emit(this.personForm.getRawValue());
+    
     this.personForm.reset();
   }
 
-  ngOnInit() {
+  updatePeople() {
     this.personService.getPeople().subscribe({
       next: (result) => this.people = result,
       error: (e) => console.error(`Error: ${e}`)
     });
+  }
+
+  ngOnInit() {
+    this.updatePeople();
 
     this.departmentService.getDepartments().subscribe({
       next: (result) => this.departments = result,
@@ -74,5 +81,9 @@ export class PeopleComponent {
 
   get department() {
     return this.personForm.get('department');
+  }
+
+  get dateOfBirth() {
+    return this.personForm.get('dateOfBirth');
   }
 }

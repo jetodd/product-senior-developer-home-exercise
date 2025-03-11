@@ -3,7 +3,7 @@
     <div class="col-sm order-2 order-md-1 col-sm-12 col-md-6">
       @if (people) {
         @for (person of people; track person) {
-            <a href="#" class="card">
+            <a href="#" class="card" ng>
                 <div class="card-inner">
                   <div class="content">
                     <div class="primary-info">{{person.firstName}} {{person.lastName}}</div>
@@ -23,30 +23,41 @@
     </div>
     <div class="col-md order-1 order-md-2 col-sm-12 col-md-6">
       <form [formGroup]="personForm" (ngSubmit)="submit()">
-        <label class="label" for="first-name">First Name</label>
-        <input id="first-name" formControlName="firstName" type="text"  class="border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
-          <small *ngIf="personForm.controls['firstName'].errors?.['required']" class="error-message">First name is mandatory</small>
+        <div class="form-group">
+          <label class="label" for="first-name">First Name</label>
+          <input id="first-name" formControlName="firstName" type="text"  class="form-control">
+          <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
+            <small *ngIf="personForm.controls['firstName'].errors?.['required']" class="error-message">First name is mandatory</small>
+          </div>
         </div>
         
-        <label class="label" for="last-name">Last Name</label>
-        <input id="lastName" name="lastName" formControlName="lastName" type="text" class="border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
-          <small *ngIf="personForm.controls['lastName'].errors?.['required']" class="error-message">Last name is mandatory</small>
+        <div class="form-group">
+          <label class="label" for="last-name">Last Name</label>
+          <input id="lastName" name="lastName" formControlName="lastName" type="text" class="form-control">
+          <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
+            <small *ngIf="personForm.controls['lastName'].errors?.['required']" class="error-message">Last name is mandatory</small>
+          </div>
         </div>
-      
-        <label class="label" for="department">Department</label>
-        <select id="department" formControlName="department" class="border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-          <option *ngFor="let d of departments" [ngValue]="d">{{ d }}</option>
-        </select>
-        <div *ngIf="department && department.invalid && (department.dirty || department.touched)">
-          <small *ngIf="personForm.controls['department'].errors?.['required']" class="error-message">Department is mandatory</small>
+
+        <div class="form-group">
+          <label class="label" for="date-of-birth">Date of Birth</label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" formControlName="dateOfBirth" class="form-control">
+          <div *ngIf="dateOfBirth && dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)">
+            <small *ngIf="personForm.controls['dateOfBirth'].errors?.['required']" class="error-message">Date of Birth is mandatory</small>
+            <small *ngIf="personForm.controls['dateOfBirth'].errors?.['invalidDate']" class="error-message">Date of Birth cannot be in the future</small>
+          </div>
         </div>
-      
-      
-        <!-- <label class="label" for="date-of-birth">Date of Birth</label>
-        <input type="text" formControlName="sport" /><br /> -->
-      
+
+        <div class="form-group">
+          <label class="label" for="department">Department</label>
+          <select id="department" formControlName="department" class="form-control">
+            <option *ngFor="let d of departments" [ngValue]="d">{{ d }}</option>
+          </select>
+          <div *ngIf="department && department.invalid && (department.dirty || department.touched)">
+            <small *ngIf="personForm.controls['department'].errors?.['required']" class="error-message">Department is mandatory</small>
+          </div>
+        </div>
+
         <button type="submit" class="btn btn-primary text-white rounded-lg mr-3">Submit</button>
         <button class="btn btn-secondary rounded-lg ml-2">Reset</button>
       </form>

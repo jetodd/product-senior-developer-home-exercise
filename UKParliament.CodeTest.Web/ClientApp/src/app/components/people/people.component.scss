@@ -25,6 +25,10 @@
     border-bottom: 3px solid #214282;
 }
 
+.form-control {
+    margin-bottom: 0.5rem;
+}
+
 .error-message {
     font-size: 1rem;
     line-height: 1.25;
@@ -47,7 +51,7 @@
 
 .card .card-inner {
     padding: 10px 15px 10px 15px;
-    border-left: 6px solid #625a75;
+    border-left: 6px solid #373151;
     position: relative;
     background-color: #ffffff;
     height: 100%;
