@@ -1,4 +1,6 @@
-﻿namespace UKParliament.CodeTest.Data;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UKParliament.CodeTest.Data;
 
 public class Person
 {
@@ -10,5 +12,7 @@ public class Person
 
     public required DateTime DateOfBirth { get; set; }
 
-    public required Department Department { get; set; }
+    public required int DepartmentId { get; set; }
+
+    public virtual Department Department { get;set;}
 }

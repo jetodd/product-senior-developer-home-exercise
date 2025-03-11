@@ -15,12 +15,12 @@ public class PersonService : IPersonService
 
     public Person GetPerson(int id) 
     {
-        return _dbcontext.People.First(p => p.Id == id);
+        return _dbcontext.People.Include("Department").First(p => p.Id == id);
     }
 
-    public async Task<List<Person>> GetPeople()
+    public List<Person> GetPeople()
     {
-        return await _dbcontext.People.ToListAsync();
+        return _dbcontext.People.Include("Department").ToList();
     }
 
     public void AddPerson(Person person)
