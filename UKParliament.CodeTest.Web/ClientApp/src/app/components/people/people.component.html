@@ -33,7 +33,7 @@
         
         <div class="form-group">
           <label class="label" for="last-name">Last Name</label>
-          <input id="lastName" name="lastName" formControlName="lastName" type="text" class="form-control">
+          <input id="last-name" name="lastName" formControlName="lastName" type="text" class="form-control">
           <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
             <small *ngIf="personForm.controls['lastName'].errors?.['required']" class="error-message">Last name is mandatory</small>
           </div>
@@ -41,7 +41,7 @@
 
         <div class="form-group">
           <label class="label" for="date-of-birth">Date of Birth</label>
-          <input type="date" id="dateOfBirth" name="dateOfBirth" formControlName="dateOfBirth" class="form-control">
+          <input type="date" id="date-of-birth" name="dateOfBirth" formControlName="dateOfBirth" class="form-control">
           <div *ngIf="dateOfBirth && dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)">
             <small *ngIf="personForm.controls['dateOfBirth'].errors?.['required']" class="error-message">Date of Birth is mandatory</small>
             <small *ngIf="personForm.controls['dateOfBirth'].errors?.['invalidDate']" class="error-message">Date of Birth cannot be in the future</small>
