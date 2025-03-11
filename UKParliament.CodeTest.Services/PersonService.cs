@@ -6,35 +6,31 @@ namespace UKParliament.CodeTest.Services;
 
 public class PersonService : IPersonService
 {
-    private readonly PersonManagerContext _dbcontext;
+    private readonly IRepository<Person> _personRepository;
 
-    public PersonService(PersonManagerContext db)
+
+    public PersonService(IRepository<Person> personRepository)
     {
-        _dbcontext = db;
+        _personRepository = personRepository;
     }
 
     public Person GetPerson(int id) 
     {
-        return _dbcontext.People.Include("Department").First(p => p.Id == id);
+        return _personRepository.GetById(id);
     }
 
-    public List<Person> GetPeople()
+    public IEnumerable<Person> GetPeople()
     {
-        return _dbcontext.People.Include("Department").ToList();
+        return _personRepository.GetAll();
     }
 
     public void AddPerson(Person person)
     {
-        _dbcontext.People.Add(person);
-        _dbcontext.SaveChanges();
+        _personRepository.Add(person);
     }
 
     public void UpdatePerson(Person person)
     {
-        if (_dbcontext.People.Any(e => e.Id == person.Id))
-        {
-            _dbcontext.People.Update(person);
-            _dbcontext.SaveChanges();
-        }
+        _personRepository.Update(person);
     }
 }
