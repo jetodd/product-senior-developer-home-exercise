@@ -20,7 +20,8 @@ public class PersonManagerContext : DbContext
             new Department { Id = 4, Name = "HR" });
 
         modelBuilder.Entity<Person>().HasData(
-            new { Id = 1, FirstName = "Hello",  LastName = "World", DateOfBirth = DateTime.Now.AddYears(-20), Department = new Department { Id = 1 }}
+            new { Id = 1, FirstName = "Hello",  LastName = "World", DateOfBirth = DateTime.Now.AddYears(-20), DepartmentId = 1 },
+            new { Id = 2, FirstName = "Theodore", LastName = "Noodle", DateOfBirth = DateTime.Now.AddYears(-3), DepartmentId = 2 }
         );
     }
 
