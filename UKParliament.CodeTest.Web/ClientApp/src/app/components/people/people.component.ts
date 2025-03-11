@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { PersonService } from '../../services/person.service';
+import { PersonViewModel } from 'src/app/models/person-view-model';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DepartmentService } from 'src/app/services/department.service';
 
 @Component({
   selector: 'app-people',
@@ -7,14 +10,69 @@ import { PersonService } from '../../services/person.service';
   styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent {
-  constructor(private personService: PersonService) {
+  //@Input() person: PersonViewModel = {firstName = '', lastName = ''};
+  @Output() submitted = new EventEmitter<PersonViewModel>();
+  personForm: FormGroup;
+  
+  people: PersonViewModel[] = [];
+  departments: string[] = [];
+
+  constructor(
+    private personService: PersonService,
+    private departmentService: DepartmentService,
+    private formBuilder: FormBuilder
+  ) {
     this.getPersonById(1);
+
+    this.personForm = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      // dateOfBirth: '',
+      department: new FormControl('', [Validators.required]),
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.medal?.currentValue) {
+      //this.personForm?.patchValue(this.person);
+    }
+  }
+
+  submit() {
+    this.submitted.emit(this.personForm.getRawValue());
+    this.personForm.reset();
+  }
+
+  ngOnInit() {
+    this.personService.getPeople().subscribe({
+      next: (result) => this.people = result,
+      error: (e) => console.error(`Error: ${e}`)
+    });
+
+    this.departmentService.getDepartments().subscribe({
+      next: (result) => this.departments = result,
+      error: (e) => console.error(`Error: ${e}`)
+    });
   }
 
   getPersonById(id: number): void {
     this.personService.getById(id).subscribe({
-      next: (result) => console.info(`User returned: ${JSON.stringify(result)}`),
+      next: (result) => {
+        console.info(`User returned: ${JSON.stringify(result)}`)
+      },
       error: (e) => console.error(`Error: ${e}`)
     });
+  }
+
+  get firstName() {
+    return this.personForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.personForm.get('lastName');
+  }
+
+  get department() {
+    return this.personForm.get('department');
   }
 }

@@ -19,10 +19,10 @@ export class PersonService {
   }
 
   addPerson(person: PersonViewModel) {
-    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, person);
+    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, person)
   }
 
   updatePerson(person: PersonViewModel) {
-    this.http.put<PersonViewModel>(this.baseUrl + `api/person/${person.id}`, person);
+    this.http.put<PersonViewModel>(this.baseUrl + `api/person/${person.id}`, person)
   }
 }

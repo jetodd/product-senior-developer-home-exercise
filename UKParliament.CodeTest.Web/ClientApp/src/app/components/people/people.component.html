@@ -1,0 +1,50 @@
+<form [formGroup]="personForm" (ngSubmit)="submit()">
+  <label class="label" for="first-name">First Name</label>
+  <input id="first-name" formControlName="firstName" type="text">
+  <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
+    <small *ngIf="personForm.controls['firstName'].errors?.['required']" class="error-message">First name is mandatory</small>
+  </div>
+  
+  <label class="label" for="last-name">Last Name</label>
+  <input id="lastName" name="lastName" formControlName="lastName" type="text">
+  <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
+    <small *ngIf="personForm.controls['lastName'].errors?.['required']" class="error-message">Last name is mandatory</small>
+  </div>
+
+  <label class="label" for="department">Department</label>
+  <select id="department" formControlName="department">
+    <option *ngFor="let d of departments" [ngValue]="d">{{ d }}</option>
+  </select>
+  <div *ngIf="department && department.invalid && (department.dirty || department.touched)">
+    <small *ngIf="personForm.controls['department'].errors?.['required']" class="error-message">Department is mandatory</small>
+  </div>
+
+
+  <!-- <label class="label" for="date-of-birth">Date of Birth</label>
+  <input type="text" formControlName="sport" /><br />
+
+  <label class="label" for="department">Department</label>
+  <input type="text" formControlName="sport" /><br /> -->
+
+  <button type="submit">Submit</button>
+</form>
+
+@if (people) {
+    @for (person of people; track person) {
+        <a href="#" class="card">
+            <div class="card-inner">
+              <div class="content">
+                <div class="primary-info">{{person.firstName}} {{person.lastName}}</div>
+                <div class="secondary-info">date of birth here</div>
+              </div>
+              <div class="info">
+                <div class="info-inner">
+                  <div class="indicators-left">
+                    <div class="indicator indicator-label">{{person.department.name}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+    }
+}
