@@ -3,7 +3,7 @@
     <div class="col-sm order-2 order-md-1 col-sm-12 col-md-6">
       @if (people) {
         @for (person of people; track person) {
-            <a href="#" class="card" ng>
+            <a class="card" (click)="handleSelect(person)">
                 <div class="card-inner">
                   <div class="content">
                     <div class="primary-info">{{person.firstName}} {{person.lastName}}</div>
@@ -12,7 +12,7 @@
                   <div class="info">
                     <div class="info-inner">
                       <div class="indicators-left">
-                        <div class="indicator indicator-label">{{person.department.name}}</div>
+                        <div class="indicator indicator-label">{{person.departmentId}}</div>
                       </div>
                     </div>
                   </div>
@@ -50,16 +50,16 @@
 
         <div class="form-group">
           <label class="label" for="department">Department</label>
-          <select id="department" formControlName="department" class="form-control">
-            <option *ngFor="let d of departments" [ngValue]="d">{{ d }}</option>
+          <select id="department" formControlName="departmentId" class="form-control">
+            <option *ngFor="let d of departments" [ngValue]="d.id">{{ d.name }}</option>
           </select>
-          <div *ngIf="department && department.invalid && (department.dirty || department.touched)">
-            <small *ngIf="personForm.controls['department'].errors?.['required']" class="error-message">Department is mandatory</small>
+          <div *ngIf="departmentId && departmentId.invalid && (departmentId.dirty || departmentId.touched)">
+            <small *ngIf="personForm.controls['departmentId'].errors?.['required']" class="error-message">Department is mandatory</small>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary text-white rounded-lg mr-3">Submit</button>
-        <button class="btn btn-secondary rounded-lg ml-2">Reset</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!personForm.valid">Save</button>
+        <button class="btn btn-secondary" (click)="clearForm()" type="button">Reset</button>
       </form>
     </div>
   </div>

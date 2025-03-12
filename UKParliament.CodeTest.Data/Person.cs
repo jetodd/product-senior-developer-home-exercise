@@ -14,5 +14,5 @@ public class Person
 
     public required int DepartmentId { get; set; }
 
-    public virtual Department Department { get;set;}
+    public virtual Department Department { get; set; }
 }

@@ -15,11 +15,9 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<string>> GetDepartments()
+    public ActionResult<IEnumerable<DepartmentViewModel>> GetDepartments()
     {
         var departments = _departmentService.GetDepartments();
-        List<string> departmentNames = departments.Select(i => i.Name).ToList();
-
-        return Ok(departmentNames);
+        return Ok(departments);
     }
 }

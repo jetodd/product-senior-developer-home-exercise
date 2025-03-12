@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { PersonService } from '../../services/person.service';
 import { PersonViewModel } from 'src/app/models/person-view-model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
 import { dateValidator } from 'src/app/validators/date-of-birth.validator';
+import { DepartmentViewModel } from 'src/app/models/department-view-model';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-people',
@@ -11,17 +13,16 @@ import { dateValidator } from 'src/app/validators/date-of-birth.validator';
   styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent {
-  //@Input() person: PersonViewModel = {firstName = '', lastName = ''};
-  @Output() submitted = new EventEmitter<PersonViewModel>();
   personForm: FormGroup;
   
   people: PersonViewModel[] = [];
-  departments: string[] = [];
+  departments: DepartmentViewModel[] = [];
+
+  selectedPersonId: number  = 0;
 
   constructor(
     private personService: PersonService,
     private departmentService: DepartmentService,
-    private formBuilder: FormBuilder
   ) {
     this.getPersonById(1);
 
@@ -29,7 +30,7 @@ export class PeopleComponent {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       dateOfBirth: new FormControl('', [Validators.required, dateValidator()]),
-      department: new FormControl('', [Validators.required]),
+      departmentId: new FormControl('', [Validators.required]),
     });
   }
 
@@ -41,9 +42,15 @@ export class PeopleComponent {
 
   submit() {
     const person = this.personForm.getRawValue();
-    this.submitted.emit(this.personForm.getRawValue());
+
+    if (this.selectedPersonId !== 0) {
+      person.id = this.selectedPersonId;
+      //this.personService.updatePerson(person);
+    } else {
+      //this.personService.addPerson(person);
+    }
     
-    this.personForm.reset();
+    this.clearForm();
   }
 
   updatePeople() {
@@ -57,7 +64,8 @@ export class PeopleComponent {
     this.updatePeople();
 
     this.departmentService.getDepartments().subscribe({
-      next: (result) => this.departments = result,
+      next: (result) =>  {this.departments = result 
+        console.log(result)},
       error: (e) => console.error(`Error: ${e}`)
     });
   }
@@ -71,19 +79,37 @@ export class PeopleComponent {
     });
   }
 
+  handleSelect(selectedPerson: PersonViewModel) {
+    this.personForm.setValue({
+      firstName: selectedPerson.firstName, 
+      lastName: selectedPerson.lastName,
+      dateOfBirth: moment(selectedPerson.dateOfBirth).format('YYYY-MM-DD'),
+      departmentId: selectedPerson.departmentId
+    });
+
+    console.log(moment(selectedPerson.dateOfBirth).format('YYYY-MM-DD'))
+
+    this.selectedPersonId = selectedPerson.id;
+  }
+
+  clearForm() {
+    this.selectedPersonId = 0;
+    this.personForm.reset();
+  }
+
   get firstName() {
-    return this.personForm.get('firstName');
+    return this.personForm.get('firstName')
   }
 
   get lastName() {
-    return this.personForm.get('lastName');
+    return this.personForm.get('lastName')
   }
 
-  get department() {
-    return this.personForm.get('department');
+  get departmentId() {
+    return this.personForm.get('departmentId')
   }
 
   get dateOfBirth() {
-    return this.personForm.get('dateOfBirth');
+    return this.personForm.get('dateOfBirth')
   }
 }

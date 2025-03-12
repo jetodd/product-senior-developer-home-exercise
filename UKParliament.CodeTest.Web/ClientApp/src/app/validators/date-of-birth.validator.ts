@@ -5,7 +5,6 @@ export function dateValidator(): ValidatorFn {
         const today = new Date().toISOString();
 
         if(!(control && control.value)) {
-            // if there's no control or no value, that's ok
             return null;
         }
 

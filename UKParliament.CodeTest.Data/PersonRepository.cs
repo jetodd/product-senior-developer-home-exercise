@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
 
-public class PersonRepository<T> : IRepository<Person> where T : class, IDisposable
+public class PersonRepository<T> : IDisposable, IRepository<Person> where T : class
 {
     private readonly PersonManagerContext _context;
 
@@ -17,12 +17,12 @@ public class PersonRepository<T> : IRepository<Person> where T : class, IDisposa
 
     public IEnumerable<Person> GetAll()
     {
-        return _context.People.ToList();
+        return _context.People.Include(p => p.Department).ToList();
     }
 
     public Person GetById(int id)
     {
-        var person = _context.People.Find(id);
+        var person = _context.People.Include(p => p.Department).FirstOrDefault(p => p.Id == id);
 
         return person;
     }
