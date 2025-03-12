@@ -5,6 +5,7 @@ import { DepartmentViewModel } from '../models/department-view-model';
 @Pipe({
   name: 'departmentFilter',
   pure: false,
+  standalone: true,
 })
 export class DepartmentFilterPipe implements PipeTransform {
   transform(id: number, departments: DepartmentViewModel[]): any {

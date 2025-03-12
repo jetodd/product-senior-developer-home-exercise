@@ -1,0 +1,22 @@
+<div class="card" role="button" (click)="sharePerson(person)">
+    <div class="card-inner">
+        <div class="content">
+        <div class="primary-info">
+            {{ person.firstName }} {{ person.lastName }}
+        </div>
+        <div class="secondary-info">
+            Birthday: {{ person.dateOfBirth | date: "MMM d, y" }}
+        </div>
+        <div class="secondary-info">Email: {{ person.email }}</div>
+        </div>
+        <div class="info">
+        <div class="info-inner">
+            <div class="indicators-left">
+            <div class="indicator indicator-label">
+                {{ person.departmentId | departmentFilter: departments }}
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

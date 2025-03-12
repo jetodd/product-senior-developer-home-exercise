@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm order-2 order-md-1 col-sm-12 col-md-6">
+      @if (people) {
+        @for (person of people; track person) {
+          <app-card [person]="person" [departments]="departments"></app-card>
+        }
+      }
+    </div>
+    <div class="col-md order-1 order-md-2 col-sm-12 col-md-6">
+      <app-person-form [departments]="departments" (personUpdated)="updatePeople()"></app-person-form>
+    </div>
+  </div>
+</div>
