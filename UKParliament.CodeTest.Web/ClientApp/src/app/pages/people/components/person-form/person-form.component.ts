@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import * as moment from 'moment';
 import { DepartmentViewModel } from 'src/app/models/department-view-model';
 import { PersonViewModel } from 'src/app/models/person-view-model';
@@ -13,7 +18,7 @@ import { ErrorListComponent } from '../error-list/error-list.component';
   standalone: true,
   imports: [ReactiveFormsModule, ErrorListComponent],
   templateUrl: './person-form.component.html',
-  styleUrl: './person-form.component.scss'
+  styleUrl: './person-form.component.scss',
 })
 export class PersonFormComponent {
   @Output() personUpdated = new EventEmitter<string>();
@@ -25,7 +30,10 @@ export class PersonFormComponent {
   selectedPersonId: number = 0;
   errors: string[] = [];
 
-  constructor(private personService: PersonService, private sharedPersonService: SharedPersonService) {
+  constructor(
+    private personService: PersonService,
+    private sharedPersonService: SharedPersonService,
+  ) {
     this.personForm = new FormGroup(
       {
         firstName: new FormControl('', [Validators.required]),
@@ -52,7 +60,7 @@ export class PersonFormComponent {
         email: person.email,
         departmentId: person.departmentId,
       });
-  
+
       this.selectedPersonId = person.id;
     });
   }

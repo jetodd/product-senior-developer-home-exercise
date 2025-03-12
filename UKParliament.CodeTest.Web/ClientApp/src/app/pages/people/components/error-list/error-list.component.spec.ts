@@ -8,9 +8,8 @@ describe('ErrorListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ErrorListComponent]
-    })
-    .compileComponents();
+      imports: [ErrorListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorListComponent);
     component = fixture.componentInstance;

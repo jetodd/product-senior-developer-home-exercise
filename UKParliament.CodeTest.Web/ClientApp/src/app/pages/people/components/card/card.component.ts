@@ -10,14 +10,13 @@ import { SharedPersonService } from 'src/app/services/shared-person.service';
   standalone: true,
   imports: [DatePipe, DepartmentFilterPipe],
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  styleUrl: './card.component.scss',
 })
 export class CardComponent {
   @Input() person: PersonViewModel;
   @Input() departments: DepartmentViewModel[] = [];
 
-  constructor(private sharedPersonService: SharedPersonService) {
-  }
+  constructor(private sharedPersonService: SharedPersonService) {}
 
   sharePerson(person: PersonViewModel): void {
     this.sharedPersonService.person.next(person);

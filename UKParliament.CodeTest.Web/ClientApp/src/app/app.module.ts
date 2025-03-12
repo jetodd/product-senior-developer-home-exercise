@@ -15,11 +15,7 @@ import { CardComponent } from './pages/people/components/card/card.component';
 import { ErrorListComponent } from './pages/people/components/error-list/error-list.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ExerciseComponent,
-    PeopleComponent,
-  ],
+  declarations: [AppComponent, ExerciseComponent, PeopleComponent],
   bootstrap: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

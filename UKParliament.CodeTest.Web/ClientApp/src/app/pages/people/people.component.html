@@ -8,7 +8,10 @@
       }
     </div>
     <div class="col-md order-1 order-md-2 col-sm-12 col-md-6">
-      <app-person-form [departments]="departments" (personUpdated)="updatePeople()"></app-person-form>
+      <app-person-form
+        [departments]="departments"
+        (personUpdated)="updatePeople()"
+      ></app-person-form>
     </div>
   </div>
 </div>
