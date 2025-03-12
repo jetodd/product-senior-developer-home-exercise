@@ -6,7 +6,6 @@ import { DepartmentService } from 'src/app/services/department.service';
 import { dateValidator } from 'src/app/validators/date-of-birth.validator';
 import { DepartmentViewModel } from 'src/app/models/department-view-model';
 import * as moment from 'moment-timezone';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-people',
