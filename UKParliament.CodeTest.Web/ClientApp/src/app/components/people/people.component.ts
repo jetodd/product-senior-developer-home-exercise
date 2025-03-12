@@ -33,23 +33,26 @@ export class PeopleComponent {
     });
   }
 
-  submit() {
+   submit() {
     const person = this.personForm.getRawValue();
 
-    console.log('person', person)
-
     if (this.selectedPersonId !== 0) {
-      this.personService.updatePerson(this.selectedPersonId, person);
+       this.personService.updatePerson(this.selectedPersonId, person)
     } else {
-      this.personService.addPerson(person);
+       this.personService.addPerson(person)
     }
-    
+
+    this.updatePeople();
     this.clearForm();
   }
 
   updatePeople() {
+    console.log('update')
     this.personService.getPeople().subscribe({
-      next: (result) => this.people = result,
+      next: (result) => {
+        console.log('result', result)
+        this.people = result
+      },
       error: (e) => console.error(`Error: ${e}`)
     });
   }
@@ -58,8 +61,7 @@ export class PeopleComponent {
     this.updatePeople();
 
     this.departmentService.getDepartments().subscribe({
-      next: (result) =>  {this.departments = result 
-        console.log(result)},
+      next: (result) =>  this.departments = result,
       error: (e) => console.error(`Error: ${e}`)
     });
   }
@@ -81,8 +83,6 @@ export class PeopleComponent {
       email: selectedPerson.email,
       departmentId: selectedPerson.departmentId
     });
-
-    console.log(moment(selectedPerson.dateOfBirth).format('YYYY-MM-DD'))
 
     this.selectedPersonId = selectedPerson.id;
   }

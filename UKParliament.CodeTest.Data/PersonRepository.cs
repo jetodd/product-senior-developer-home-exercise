@@ -13,6 +13,7 @@ public class PersonRepository<T> : IDisposable, IRepository<Person> where T : cl
     public void Add(Person entity)
     {
         _context.People.Add(entity).State = EntityState.Added;
+        _context.SaveChanges();
     }
 
     public IEnumerable<Person> GetAll()
@@ -29,7 +30,17 @@ public class PersonRepository<T> : IDisposable, IRepository<Person> where T : cl
 
     public void Update(Person entity)
     {
-         _context.Entry(entity).State = EntityState.Modified;
+        var toUpdate = _context.People.Find(entity.Id);
+
+        if (toUpdate != null) {
+            toUpdate.FirstName = entity.FirstName;
+            toUpdate.LastName = entity.LastName;
+            toUpdate.DateOfBirth = entity.DateOfBirth;
+            toUpdate.Email = entity.Email;
+            toUpdate.DepartmentId = entity.DepartmentId;
+
+            _context.SaveChanges();
+        }
     }
 
     private bool _disposed = false;

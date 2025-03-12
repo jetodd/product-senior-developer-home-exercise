@@ -23,6 +23,10 @@ public class PersonController : ControllerBase
     public ActionResult<PersonViewModel> GetById(int id)
     {
         var person = _personService.GetPerson(id);
+
+        if (person == null)
+            return NotFound();
+
         return Ok(person);
     }
 
@@ -36,8 +40,8 @@ public class PersonController : ControllerBase
     [HttpPost]
     public ActionResult AddPerson(PersonViewModel person) {
         var personToAdd = _mapper.Map<Person>(person);
-
         _personService.AddPerson(personToAdd);
+        
         return NoContent();
     }
 
@@ -45,10 +49,9 @@ public class PersonController : ControllerBase
     [HttpPut]
     public ActionResult UpdatePerson(int id, PersonViewModel person) {
         var personToUpdate = _mapper.Map<Person>(person);
-
         personToUpdate.Id = id;
-
         _personService.UpdatePerson(personToUpdate);
+
         return NoContent();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using UKParliament.CodeTest.Data;
+﻿using UKParliament.CodeTest.Data;
 
 namespace UKParliament.CodeTest.Services;
 

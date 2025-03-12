@@ -18,11 +18,15 @@ export class PersonService {
     return this.http.get<PersonViewModel[]>(this.baseUrl + `api/person`)
   }
 
-  addPerson(person: PersonViewModel) {
-    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, person)
+   addPerson(person: PersonViewModel) {
+    console.log('add ', this.baseUrl + `api/person`)
+    console.log(JSON.stringify(person))
+     this.http.post<PersonViewModel>(this.baseUrl + `api/person`, JSON.stringify(person))
   }
 
-  updatePerson(id: number, person: PersonViewModel) {
-    this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, person)
+   updatePerson(id: number, person: PersonViewModel) {
+    console.log('update ', this.baseUrl + `api/person/${id}`)
+    console.log(JSON.stringify(person))
+     this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, JSON.stringify(person))
   }
 }

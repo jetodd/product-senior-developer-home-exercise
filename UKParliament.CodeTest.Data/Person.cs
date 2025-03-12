@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace UKParliament.CodeTest.Data;
+﻿namespace UKParliament.CodeTest.Data;
 
 public class Person
 {
