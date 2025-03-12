@@ -24,7 +24,7 @@ import { DepartmentFilterPipe } from './pipes/department-filter.pipe';
         ReactiveFormsModule,
         RouterModule.forRoot([
             { path: 'exercise', component: ExerciseComponent, pathMatch: 'full' },
-            { path: 'people', component: PeopleComponent, pathMatch: 'full'},
+            { path: '', component: PeopleComponent, pathMatch: 'full'},
         ])], providers: [provideHttpClient(withInterceptorsFromDi())] })
         
 export class AppModule { }
