@@ -36,11 +36,12 @@ export class PeopleComponent {
   submit() {
     const person = this.personForm.getRawValue();
 
+    console.log('person', person)
+
     if (this.selectedPersonId !== 0) {
-      person.id = this.selectedPersonId;
-      //this.personService.updatePerson(person);
+      this.personService.updatePerson(this.selectedPersonId, person);
     } else {
-      //this.personService.addPerson(person);
+      this.personService.addPerson(person);
     }
     
     this.clearForm();

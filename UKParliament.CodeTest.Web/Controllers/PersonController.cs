@@ -43,7 +43,12 @@ public class PersonController : ControllerBase
 
     [Route("{id:int}")]
     [HttpPut]
-    public ActionResult UpdatePerson(int id) {
+    public ActionResult UpdatePerson(int id, PersonViewModel person) {
+        var personToUpdate = _mapper.Map<Person>(person);
+
+        personToUpdate.Id = id;
+
+        _personService.UpdatePerson(personToUpdate);
         return NoContent();
     }
 }
