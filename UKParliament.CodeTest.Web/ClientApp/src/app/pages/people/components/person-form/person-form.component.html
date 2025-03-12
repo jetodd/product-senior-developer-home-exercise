@@ -1,5 +1,5 @@
 @if (errors && errors.length > 0) {
-  <app-error-list (errors)="(errors)"></app-error-list>
+  <app-error-list [errors]="errors"></app-error-list>
 }
 
 <form [formGroup]="personForm" (ngSubmit)="submit()" class="form">
