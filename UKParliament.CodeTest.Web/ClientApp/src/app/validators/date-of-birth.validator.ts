@@ -1,18 +1,17 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function dateValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        const today = new Date().toISOString();
+  return (control: AbstractControl): ValidationErrors | null => {
+    const today = new Date().toISOString();
 
-        if(!(control && control.value)) {
-            return null;
-        }
+    if (!(control && control.value)) {
+      return null;
+    }
 
-        const dateToCheck = new Date(control.value);
+    const dateToCheck = new Date(control.value);
 
-        return dateToCheck.toISOString() > today
-            ? { invalidDate: 'You cannot use future dates' } 
-            : null;
-    };
-  }
-  
+    return dateToCheck.toISOString() > today
+      ? { invalidDate: 'You cannot use future dates' }
+      : null;
+  };
+}

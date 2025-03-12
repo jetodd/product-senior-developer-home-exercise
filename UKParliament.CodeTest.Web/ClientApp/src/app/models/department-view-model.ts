@@ -1,5 +1,4 @@
 export interface DepartmentViewModel {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
-  

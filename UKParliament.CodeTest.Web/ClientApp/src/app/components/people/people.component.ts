@@ -10,32 +10,36 @@ import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
-  styleUrls: ['./people.component.scss']
+  styleUrls: ['./people.component.scss'],
 })
 export class PeopleComponent {
   personForm: FormGroup;
-  
+
   people: PersonViewModel[] = [];
   departments: DepartmentViewModel[] = [];
 
-  selectedPersonId: number  = 0;
+  selectedPersonId: number = 0;
   errors: string[] = [];
 
   constructor(
     private personService: PersonService,
     private departmentService: DepartmentService,
   ) {
-    this.personForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      dateOfBirth: new FormControl('', [Validators.required, dateValidator()]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      departmentId: new FormControl('', [Validators.required]),
-    },
-    {
-      updateOn: 'blur',
-    }
-  );
+    this.personForm = new FormGroup(
+      {
+        firstName: new FormControl('', [Validators.required]),
+        lastName: new FormControl('', [Validators.required]),
+        dateOfBirth: new FormControl('', [
+          Validators.required,
+          dateValidator(),
+        ]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        departmentId: new FormControl('', [Validators.required]),
+      },
+      {
+        updateOn: 'blur',
+      },
+    );
   }
 
   submit() {
@@ -44,18 +48,18 @@ export class PeopleComponent {
     if (this.selectedPersonId !== 0) {
       this.personService.updatePerson(this.selectedPersonId, person).subscribe({
         next: () => {
-          this.updatePeople()
-          this.clearForm()
+          this.updatePeople();
+          this.clearForm();
         },
         error: (e) => {
           this.errors = e.error;
-        }
+        },
       });
     } else {
       this.personService.addPerson(person).subscribe({
         next: () => {
-          this.updatePeople()
-          this.clearForm()
+          this.updatePeople();
+          this.clearForm();
         },
         error: (e) => {
           this.errors = e.error;
@@ -66,8 +70,8 @@ export class PeopleComponent {
 
   updatePeople() {
     this.personService.getPeople().subscribe({
-      next: (result) => this.people = result,
-      error: (e) => console.error(`Error: ${e}`)
+      next: (result) => (this.people = result),
+      error: (e) => console.error(`Error: ${e}`),
     });
   }
 
@@ -75,27 +79,27 @@ export class PeopleComponent {
     this.updatePeople();
 
     this.departmentService.getDepartments().subscribe({
-      next: (result) =>  this.departments = result,
-      error: (e) => console.error(`Error: ${e}`)
+      next: (result) => (this.departments = result),
+      error: (e) => console.error(`Error: ${e}`),
     });
   }
 
   getPersonById(id: number): void {
     this.personService.getById(id).subscribe({
       next: (result) => {
-        console.info(`User returned: ${JSON.stringify(result)}`)
+        console.info(`User returned: ${JSON.stringify(result)}`);
       },
-      error: (e) => console.error(`Error: ${e}`)
+      error: (e) => console.error(`Error: ${e}`),
     });
   }
 
   handleSelect(selectedPerson: PersonViewModel) {
     this.personForm.setValue({
-      firstName: selectedPerson.firstName, 
+      firstName: selectedPerson.firstName,
       lastName: selectedPerson.lastName,
       dateOfBirth: moment(selectedPerson.dateOfBirth).format('YYYY-MM-DD'),
       email: selectedPerson.email,
-      departmentId: selectedPerson.departmentId
+      departmentId: selectedPerson.departmentId,
     });
 
     this.selectedPersonId = selectedPerson.id;
@@ -108,22 +112,22 @@ export class PeopleComponent {
   }
 
   get firstName() {
-    return this.personForm.get('firstName')
+    return this.personForm.get('firstName');
   }
 
   get lastName() {
-    return this.personForm.get('lastName')
+    return this.personForm.get('lastName');
   }
 
   get departmentId() {
-    return this.personForm.get('departmentId')
+    return this.personForm.get('departmentId');
   }
 
   get dateOfBirth() {
-    return this.personForm.get('dateOfBirth')
+    return this.personForm.get('dateOfBirth');
   }
 
   get email() {
-    return this.personForm.get('email')
+    return this.personForm.get('email');
   }
 }

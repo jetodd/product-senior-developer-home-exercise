@@ -4,12 +4,17 @@ import { Observable } from 'rxjs';
 import { DepartmentViewModel } from '../models/department-view-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DepartmentService {
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string,
+  ) {}
 
   getDepartments(): Observable<DepartmentViewModel[]> {
-    return this.http.get<DepartmentViewModel[]>(this.baseUrl + `api/department`)
+    return this.http.get<DepartmentViewModel[]>(
+      this.baseUrl + `api/department`,
+    );
   }
 }
