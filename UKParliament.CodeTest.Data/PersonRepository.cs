@@ -21,11 +21,9 @@ public class PersonRepository<T> : IDisposable, IRepository<Person> where T : cl
         return _context.People.Include(p => p.Department).ToList();
     }
 
-    public Person GetById(int id)
+    public Person? GetById(int id)
     {
-        var person = _context.People.Include(p => p.Department).FirstOrDefault(p => p.Id == id);
-
-        return person;
+        return _context.People.Include(p => p.Department).FirstOrDefault(p => p.Id == id);
     }
 
     public void Update(Person entity)

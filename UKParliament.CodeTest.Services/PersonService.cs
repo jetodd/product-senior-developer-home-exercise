@@ -6,7 +6,7 @@ namespace UKParliament.CodeTest.Services;
 public class PersonService : IPersonService
 {
     private readonly IRepository<Person> _personRepository;
-     private readonly IValidator<Person> _validator;
+    private readonly IValidator<Person> _validator;
 
     public PersonService(IRepository<Person> personRepository, IValidator<Person> validator)
     {
@@ -14,7 +14,7 @@ public class PersonService : IPersonService
         _validator = validator;
     }
 
-    public Person GetPerson(int id) 
+    public Person? GetPerson(int id) 
     {
         var person = _personRepository.GetById(id);
         return person;

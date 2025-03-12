@@ -20,7 +20,7 @@ public class DepartmentRepository<T> : IDisposable, IRepository<Department> wher
         return _context.Departments.ToList();
     }
 
-    public Department GetById(int id)
+    public Department? GetById(int id)
     {
         return _context.Departments.Find(id);
     }
