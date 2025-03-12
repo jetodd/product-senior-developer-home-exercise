@@ -27,7 +27,8 @@ public class PersonControllerTests
 
         var mockMapper = new Mock<IMapper>();
         mockMapper.Setup(m => m.Map<Person, PersonViewModel>(It.IsAny<Person>()))
-            .Returns(new PersonViewModel { 
+            .Returns(new PersonViewModel {
+                Id = mockPerson.Id,
                 FirstName = mockPerson.FirstName,
                 LastName = mockPerson.LastName,
                 DateOfBirth = mockPerson.DateOfBirth,

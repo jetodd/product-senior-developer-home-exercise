@@ -26,6 +26,7 @@ export class PersonService {
   }
 
    updatePerson(id: number, person: PersonViewModel) {
+    person.id = id;
     const data = JSON.stringify(person)
     let headers = new HttpHeaders({'Content-Type': 'application/json'})
 
