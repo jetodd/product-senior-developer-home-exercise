@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using UKParliament.CodeTest.Data;
+using UKParliament.CodeTest.Services.Exceptions;
 
 namespace UKParliament.CodeTest.Services;
 
@@ -29,15 +30,23 @@ public class PersonService : IPersonService
     {
         var validationResult = _validator.Validate(person);
 
-        if (validationResult.IsValid)
+        if (validationResult.IsValid) {
             _personRepository.Add(person);
+        } else {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            throw new InvalidPersonException(errors);
+        }
     }
 
     public void UpdatePerson(Person person)
     {
         var validationResult = _validator.Validate(person);
 
-        if (validationResult.IsValid)
+        if (validationResult.IsValid) {
             _personRepository.Update(person);
+        } else {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            throw new InvalidPersonException(errors);
+        }
     }
 }

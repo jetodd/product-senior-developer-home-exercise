@@ -1,6 +1,8 @@
 using FluentValidation;
 using UKParliament.CodeTest.Data;
 
+namespace UKParliament.CodeTest.Services.Validators;
+
 public class PersonValidator : AbstractValidator<Person>
 {
   public PersonValidator()

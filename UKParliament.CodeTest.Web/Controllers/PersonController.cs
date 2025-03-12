@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
+using UKParliament.CodeTest.Services.Exceptions;
 using UKParliament.CodeTest.Web.ViewModels;
 
 namespace UKParliament.CodeTest.Web.Controllers;
@@ -46,9 +47,12 @@ public class PersonController : ControllerBase
     public ActionResult AddPerson(PersonViewModel person) {
         var personToAdd = _mapper.Map<Person>(person);
 
-        _personService.AddPerson(personToAdd);
-        
-        return NoContent();
+        try {
+            _personService.AddPerson(personToAdd);
+            return NoContent();
+        } catch (InvalidPersonException err) {
+            return UnprocessableEntity(err.Errors);
+        }
     }
 
     [Route("{id:int}")]
@@ -57,8 +61,11 @@ public class PersonController : ControllerBase
         var personToUpdate = _mapper.Map<Person>(person);
         personToUpdate.Id = id;
 
-        _personService.UpdatePerson(personToUpdate);
-
-        return NoContent();
+        try {
+            _personService.UpdatePerson(personToUpdate);
+            return NoContent();
+        } catch (InvalidPersonException e) {
+            return UnprocessableEntity();
+        }
     }
 }

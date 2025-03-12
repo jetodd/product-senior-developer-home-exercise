@@ -30,7 +30,11 @@ export class PeopleComponent {
       dateOfBirth: new FormControl('', [Validators.required, dateValidator()]),
       email: new FormControl('', [Validators.required, Validators.email]),
       departmentId: new FormControl('', [Validators.required]),
-    });
+    },
+    {
+      updateOn: 'blur',
+    }
+  );
   }
 
   submit() {
