@@ -19,6 +19,7 @@ export class PeopleComponent {
   departments: DepartmentViewModel[] = [];
 
   selectedPersonId: number  = 0;
+  errors: string[] = [];
 
   constructor(
     private personService: PersonService,
@@ -41,16 +42,26 @@ export class PeopleComponent {
     const person = this.personForm.getRawValue();
 
     if (this.selectedPersonId !== 0) {
-      this.personService.updatePerson(this.selectedPersonId, person).subscribe(()=>{
-        this.updatePeople();
+      this.personService.updatePerson(this.selectedPersonId, person).subscribe({
+        next: () => {
+          this.updatePeople()
+          this.clearForm()
+        },
+        error: (e) => {
+          this.errors = e.error;
+        }
       });
     } else {
-      this.personService.addPerson(person).subscribe(()=>{
-        this.updatePeople();
+      this.personService.addPerson(person).subscribe({
+        next: () => {
+          this.updatePeople()
+          this.clearForm()
+        },
+        error: (e) => {
+          this.errors = e.error;
+        },
       });
     }
-
-    this.clearForm();
   }
 
   updatePeople() {
@@ -93,6 +104,7 @@ export class PeopleComponent {
   clearForm() {
     this.selectedPersonId = 0;
     this.personForm.reset();
+    this.errors = [];
   }
 
   get firstName() {

@@ -64,8 +64,8 @@ public class PersonController : ControllerBase
         try {
             _personService.UpdatePerson(personToUpdate);
             return NoContent();
-        } catch (InvalidPersonException e) {
-            return UnprocessableEntity();
+        } catch (InvalidPersonException err) {
+            return UnprocessableEntity(err.Errors);
         }
     }
 }

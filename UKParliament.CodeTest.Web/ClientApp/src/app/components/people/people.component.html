@@ -23,6 +23,16 @@
       }
     </div>
     <div class="col-md order-1 order-md-2 col-sm-12 col-md-6">
+      @if (errors && errors.length > 0) {
+        <div class="alert alert-danger" role="alert">
+          Please fix the errors below
+          <ul>
+            @for (error of errors; track error) {
+              <li>{{error}}</li>
+            }
+          </ul>
+        </div>
+      }
       <form [formGroup]="personForm" (ngSubmit)="submit()" class="form">
         <div class="form-group">
           <label class="label" for="first-name">First Name</label>
@@ -60,7 +70,7 @@
 
         <div class="form-group">
           <label class="label" for="department">Department</label>
-          <select id="department" formControlName="departmentId" class="form-control">
+          <select id="department" formControlName="departmentId" class="form-select">
             <option *ngFor="let d of departments" [ngValue]="d.id">{{ d.name }}</option>
           </select>
           <div *ngIf="departmentId && departmentId.invalid && (departmentId.dirty || departmentId.touched)">
