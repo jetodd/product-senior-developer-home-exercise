@@ -33,13 +33,13 @@ export class PeopleComponent {
     });
   }
 
-   submit() {
+  submit() {
     const person = this.personForm.getRawValue();
 
     if (this.selectedPersonId !== 0) {
-       this.personService.updatePerson(this.selectedPersonId, person)
+      this.personService.updatePerson(this.selectedPersonId, person)
     } else {
-       this.personService.addPerson(person)
+      this.personService.addPerson(person)
     }
 
     this.updatePeople();

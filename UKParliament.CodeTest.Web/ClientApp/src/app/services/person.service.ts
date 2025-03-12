@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { PersonViewModel } from '../models/person-view-model';
 
 @Injectable({
@@ -19,14 +19,29 @@ export class PersonService {
   }
 
    addPerson(person: PersonViewModel) {
-    console.log('add ', this.baseUrl + `api/person`)
-    console.log(JSON.stringify(person))
-     this.http.post<PersonViewModel>(this.baseUrl + `api/person`, JSON.stringify(person))
+    const data = JSON.stringify(person)
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Content-Length': data.length})
+
+    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, data, {headers}).subscribe({
+      error: this.errorHandler
+    })
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    console.log('error', error);
+    return throwError(error.message || "server error.");
   }
 
    updatePerson(id: number, person: PersonViewModel) {
-    console.log('update ', this.baseUrl + `api/person/${id}`)
-    console.log(JSON.stringify(person))
-     this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, JSON.stringify(person))
+    const data = JSON.stringify(person)
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Content-Length': data.length})
+
+     this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, data, { headers }).subscribe({
+      error: this.errorHandler
+    })
   }
 }
