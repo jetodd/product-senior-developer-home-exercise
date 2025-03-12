@@ -4,9 +4,9 @@ namespace UKParliament.CodeTest.Services;
 
 public class DepartmentService : IDepartmentService
 {
-    private readonly IRepository<Department> _departmentRepository;
+    private readonly IDepartmentRepository<Department> _departmentRepository;
 
-    public DepartmentService(IRepository<Department> departmentRepository)
+    public DepartmentService(IDepartmentRepository<Department> departmentRepository)
     {
         _departmentRepository = departmentRepository;
     }

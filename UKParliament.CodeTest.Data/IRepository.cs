@@ -1,3 +1,5 @@
+namespace UKParliament.CodeTest.Data;
+
 public interface IRepository<T> where T : class
 {
     IEnumerable<T> GetAll();

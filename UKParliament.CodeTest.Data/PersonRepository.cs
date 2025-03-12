@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using UKParliament.CodeTest.Data;
+
+namespace UKParliament.CodeTest.Data;
 
 public class PersonRepository<T> : IDisposable, IRepository<Person> where T : class
 {
