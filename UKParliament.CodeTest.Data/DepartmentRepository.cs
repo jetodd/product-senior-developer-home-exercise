@@ -1,33 +1,31 @@
 using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
 
-public class PersonRepository<T> : IDisposable, IRepository<Person> where T : class
+public class DepartmentRepository<T> : IDisposable, IRepository<Department> where T : class
 {
     private readonly PersonManagerContext _context;
 
-    public PersonRepository(PersonManagerContext context)
+    public DepartmentRepository(PersonManagerContext context)
     {
         _context = context;
     }
 
-    public void Add(Person entity)
+    public void Add(Department entity)
     {
-        _context.People.Add(entity).State = EntityState.Added;
+        _context.Departments.Add(entity).State = EntityState.Added;
     }
 
-    public IEnumerable<Person> GetAll()
+    public IEnumerable<Department> GetAll()
     {
-        return _context.People.Include(p => p.Department).ToList();
+        return _context.Departments.ToList();
     }
 
-    public Person GetById(int id)
+    public Department GetById(int id)
     {
-        var person = _context.People.Include(p => p.Department).FirstOrDefault(p => p.Id == id);
-
-        return person;
+        return _context.Departments.Find(id);
     }
 
-    public void Update(Person entity)
+    public void Update(Department entity)
     {
          _context.Entry(entity).State = EntityState.Modified;
     }

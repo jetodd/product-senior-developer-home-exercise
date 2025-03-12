@@ -4,15 +4,15 @@ namespace UKParliament.CodeTest.Services;
 
 public class DepartmentService : IDepartmentService
 {
-    private readonly PersonManagerContext _dbcontext;
+    private readonly IRepository<Department> _departmentRepository;
 
-    public DepartmentService(PersonManagerContext db)
+    public DepartmentService(IRepository<Department> departmentRepository)
     {
-        _dbcontext = db;
+        _departmentRepository = departmentRepository;
     }
 
-    List<Department> IDepartmentService.GetDepartments()
+    IEnumerable<Department> IDepartmentService.GetDepartments()
     {
-        return _dbcontext.Departments.ToList();
+        return _departmentRepository.GetAll();
     }
 }

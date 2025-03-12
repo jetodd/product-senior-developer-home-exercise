@@ -8,7 +8,6 @@ public class PersonService : IPersonService
 {
     private readonly IRepository<Person> _personRepository;
 
-
     public PersonService(IRepository<Person> personRepository)
     {
         _personRepository = personRepository;
