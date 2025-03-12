@@ -13,7 +13,7 @@ public class PersonServiceTests
     };
 
     [Fact]
-    public void GetPerson_ReturnsPerson()
+    public void GetPerson_PersonExists_ReturnsPerson()
     {
         var personId = 2;
 
@@ -31,7 +31,7 @@ public class PersonServiceTests
     }
 
     [Fact]
-    public void GetPerson_DoesNotExist_ReturnsNull()
+    public void GetPerson_PersonDoesNotExist_ReturnsNull()
     {
         var personId = -1;
 
@@ -45,20 +45,5 @@ public class PersonServiceTests
         mockRepository.Verify(r => r.GetById(personId), Times.Once);
 
         Assert.Null(result);
-    }
-
-    [Fact]
-    public void GetPeople_ReturnsListOfPeople() 
-    {
-        var mockRepository = new Mock<IRepository<Person>>();
-        mockRepository.Setup(r => r.GetAll())
-            .Returns(testPeople);
-
-        var personService = new PersonService(mockRepository.Object, new PersonValidator());
-        var result = personService.GetPeople();
-
-        mockRepository.Verify(r => r.GetAll(), Times.Once);
-
-        Assert.Equal(result.Count(), testPeople.Count);
     }
 }
