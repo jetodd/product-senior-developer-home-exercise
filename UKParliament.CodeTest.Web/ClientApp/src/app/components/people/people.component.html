@@ -49,6 +49,15 @@
         </div>
 
         <div class="form-group">
+          <label class="label" for="email">Email</label>
+          <input type="email" id="email" name="email" formControlName="email" class="form-control">
+          <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+            <small *ngIf="personForm.controls['email'].errors?.['required']" class="error-message">Email is mandatory</small>
+            <small *ngIf="personForm.controls['email'].errors?.['email']" class="error-message">Please enter a valid email</small>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="label" for="department">Department</label>
           <select id="department" formControlName="departmentId" class="form-control">
             <option *ngFor="let d of departments" [ngValue]="d.id">{{ d.name }}</option>

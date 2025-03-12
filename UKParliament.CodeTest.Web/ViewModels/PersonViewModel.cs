@@ -9,4 +9,5 @@ public class PersonViewModel
     public required int DepartmentId { get; set; }
     public required Department Department { get; set; }
     public required DateTime DateOfBirth { get; set; }
+    public required string Email { get; set; }
 }

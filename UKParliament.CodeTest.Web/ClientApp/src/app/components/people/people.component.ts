@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { PersonService } from '../../services/person.service';
 import { PersonViewModel } from 'src/app/models/person-view-model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -24,20 +24,13 @@ export class PeopleComponent {
     private personService: PersonService,
     private departmentService: DepartmentService,
   ) {
-    this.getPersonById(1);
-
     this.personForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       dateOfBirth: new FormControl('', [Validators.required, dateValidator()]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       departmentId: new FormControl('', [Validators.required]),
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.medal?.currentValue) {
-      //this.personForm?.patchValue(this.person);
-    }
   }
 
   submit() {
@@ -84,6 +77,7 @@ export class PeopleComponent {
       firstName: selectedPerson.firstName, 
       lastName: selectedPerson.lastName,
       dateOfBirth: moment(selectedPerson.dateOfBirth).format('YYYY-MM-DD'),
+      email: selectedPerson.email,
       departmentId: selectedPerson.departmentId
     });
 
@@ -111,5 +105,9 @@ export class PeopleComponent {
 
   get dateOfBirth() {
     return this.personForm.get('dateOfBirth')
+  }
+
+  get email() {
+    return this.personForm.get('email')
   }
 }
