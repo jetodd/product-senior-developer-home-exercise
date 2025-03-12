@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
@@ -21,6 +22,8 @@ public class Program
         builder.Services.AddScoped<IRepository<Department>, DepartmentRepository<Department>>();
         builder.Services.AddScoped<IPersonService, PersonService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+
+        builder.Services.AddScoped<IValidator<Person>, PersonValidator>();
 
         var mapperConfig = new MapperConfiguration(mc =>
         {

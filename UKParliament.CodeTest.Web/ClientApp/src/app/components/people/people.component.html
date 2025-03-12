@@ -7,7 +7,8 @@
                 <div class="card-inner">
                   <div class="content">
                     <div class="primary-info">{{person.firstName}} {{person.lastName}}</div>
-                    <div class="secondary-info">{{person.dateOfBirth  | date: 'MMM d, y'}}</div>
+                    <div class="secondary-info">Birthday: {{person.dateOfBirth  | date: 'MMM d, y'}}</div>
+                    <div class="secondary-info">Email: {{person.email}}</div>
                   </div>
                   <div class="info">
                     <div class="info-inner">
@@ -22,7 +23,7 @@
       }
     </div>
     <div class="col-md order-1 order-md-2 col-sm-12 col-md-6">
-      <form [formGroup]="personForm" (ngSubmit)="submit()">
+      <form [formGroup]="personForm" (ngSubmit)="submit()" class="form">
         <div class="form-group">
           <label class="label" for="first-name">First Name</label>
           <input id="first-name" formControlName="firstName" type="text"  class="form-control">
@@ -67,8 +68,10 @@
           </div>
         </div>
 
+        <div class="form-group">
         <button type="submit" class="btn btn-primary" [disabled]="!personForm.valid">Save</button>
         <button class="btn btn-secondary" (click)="clearForm()" type="button">Reset</button>
+      </div>
       </form>
     </div>
   </div>

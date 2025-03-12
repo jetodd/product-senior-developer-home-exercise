@@ -1,19 +1,23 @@
-﻿using UKParliament.CodeTest.Data;
+﻿using FluentValidation;
+using UKParliament.CodeTest.Data;
 
 namespace UKParliament.CodeTest.Services;
 
 public class PersonService : IPersonService
 {
     private readonly IRepository<Person> _personRepository;
+     private readonly IValidator<Person> _validator;
 
-    public PersonService(IRepository<Person> personRepository)
+    public PersonService(IRepository<Person> personRepository, IValidator<Person> validator)
     {
         _personRepository = personRepository;
+        _validator = validator;
     }
 
     public Person GetPerson(int id) 
     {
-        return _personRepository.GetById(id);
+        var person = _personRepository.GetById(id);
+        return person;
     }
 
     public IEnumerable<Person> GetPeople()
@@ -23,11 +27,17 @@ public class PersonService : IPersonService
 
     public void AddPerson(Person person)
     {
-        _personRepository.Add(person);
+        var validationResult = _validator.Validate(person);
+
+        if (validationResult.IsValid)
+            _personRepository.Add(person);
     }
 
     public void UpdatePerson(Person person)
     {
-        _personRepository.Update(person);
+        var validationResult = _validator.Validate(person);
+
+        if (validationResult.IsValid)
+            _personRepository.Update(person);
     }
 }
