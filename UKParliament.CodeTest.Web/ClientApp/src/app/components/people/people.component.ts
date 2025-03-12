@@ -6,6 +6,7 @@ import { DepartmentService } from 'src/app/services/department.service';
 import { dateValidator } from 'src/app/validators/date-of-birth.validator';
 import { DepartmentViewModel } from 'src/app/models/department-view-model';
 import * as moment from 'moment-timezone';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-people',
@@ -37,22 +38,21 @@ export class PeopleComponent {
     const person = this.personForm.getRawValue();
 
     if (this.selectedPersonId !== 0) {
-      this.personService.updatePerson(this.selectedPersonId, person)
+      this.personService.updatePerson(this.selectedPersonId, person).subscribe(()=>{
+        this.updatePeople();
+      });
     } else {
-      this.personService.addPerson(person)
+      this.personService.addPerson(person).subscribe(()=>{
+        this.updatePeople();
+      });
     }
 
-    this.updatePeople();
     this.clearForm();
   }
 
   updatePeople() {
-    console.log('update')
     this.personService.getPeople().subscribe({
-      next: (result) => {
-        console.log('result', result)
-        this.people = result
-      },
+      next: (result) => this.people = result,
       error: (e) => console.error(`Error: ${e}`)
     });
   }

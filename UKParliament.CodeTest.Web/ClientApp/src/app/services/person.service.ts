@@ -20,28 +20,15 @@ export class PersonService {
 
    addPerson(person: PersonViewModel) {
     const data = JSON.stringify(person)
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Content-Length': data.length})
+    let headers = new HttpHeaders({'Content-Type': 'application/json'})
 
-    this.http.post<PersonViewModel>(this.baseUrl + `api/person`, data, {headers}).subscribe({
-      error: this.errorHandler
-    })
-  }
-
-  errorHandler(error: HttpErrorResponse) {
-    console.log('error', error);
-    return throwError(error.message || "server error.");
+    return this.http.post<number>(this.baseUrl + `api/person`, data, {headers})
   }
 
    updatePerson(id: number, person: PersonViewModel) {
     const data = JSON.stringify(person)
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Content-Length': data.length})
+    let headers = new HttpHeaders({'Content-Type': 'application/json'})
 
-     this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, data, { headers }).subscribe({
-      error: this.errorHandler
-    })
+    return this.http.put<PersonViewModel>(this.baseUrl + `api/person/${id}`, data, { headers })
   }
 }
