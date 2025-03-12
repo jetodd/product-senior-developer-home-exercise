@@ -11,7 +11,7 @@ namespace UKParliament.CodeTest.Web.Controllers;
 public class PersonController : ControllerBase
 {
     private readonly IPersonService _personService;
-     private readonly IMapper _mapper;
+    private readonly IMapper _mapper;
 
     public PersonController(IPersonService personService, IMapper mapper) {
         _personService = personService;
@@ -26,20 +26,26 @@ public class PersonController : ControllerBase
 
         if (person == null)
             return NotFound();
+        
+        var personView = _mapper.Map<PersonViewModel>(person);
 
-        return Ok(person);
+        return Ok(personView);
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<PersonViewModel>> GetPeople()
     {
         var people = _personService.GetPeople();
-        return Ok(people);
+
+        var personView = _mapper.Map<IEnumerable<Person>, IEnumerable<PersonViewModel>>(people);
+
+        return Ok(personView);
     }
 
     [HttpPost]
     public ActionResult AddPerson(PersonViewModel person) {
         var personToAdd = _mapper.Map<Person>(person);
+
         _personService.AddPerson(personToAdd);
         
         return NoContent();
@@ -50,6 +56,7 @@ public class PersonController : ControllerBase
     public ActionResult UpdatePerson(int id, PersonViewModel person) {
         var personToUpdate = _mapper.Map<Person>(person);
         personToUpdate.Id = id;
+
         _personService.UpdatePerson(personToUpdate);
 
         return NoContent();

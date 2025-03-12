@@ -1,4 +1,6 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
 using UKParliament.CodeTest.Web.ViewModels;
 
@@ -9,15 +11,20 @@ namespace UKParliament.CodeTest.Web.Controllers;
 public class DepartmentController : ControllerBase
 {
     private readonly IDepartmentService _departmentService;
+    private readonly IMapper _mapper;
 
-    public DepartmentController(IDepartmentService departmentService) {
+    public DepartmentController(IDepartmentService departmentService, IMapper mapper) {
         _departmentService = departmentService;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<DepartmentViewModel>> GetDepartments()
     {
         var departments = _departmentService.GetDepartments();
-        return Ok(departments);
+
+        var departmentsView = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(departments);
+
+        return Ok(departmentsView);
     }
 }

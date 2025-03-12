@@ -4,6 +4,8 @@ using Moq;
 using UKParliament.CodeTest.Services;
 using UKParliament.CodeTest.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using UKParliament.CodeTest.Web.ViewModels;
 
 namespace UKParliament.CodeTest.Tests.ControllerTests;
 
@@ -17,11 +19,15 @@ public class DepartmentControllerTests
     };
 
     [Fact]
-    public void GetDepartments_ReturnsListOfDepartments() {
+    public void GetDepartments_ReturnsOk() {
         var mockDepartmentService = new Mock<IDepartmentService>();
         mockDepartmentService.Setup(d => d.GetDepartments()).Returns(mockDepartments);
 
-        var controller = new DepartmentController(mockDepartmentService.Object);
+        var mockMapper = new Mock<IMapper>();
+        mockMapper.Setup(m => m.Map<Department, DepartmentViewModel>(It.IsAny<Department>()))
+            .Returns(new DepartmentViewModel { Id = 1, Name = "Bob" });
+
+        var controller = new DepartmentController(mockDepartmentService.Object, mockMapper.Object);
 
         var result = controller.GetDepartments();
         var okResult = result.Result as OkObjectResult;
