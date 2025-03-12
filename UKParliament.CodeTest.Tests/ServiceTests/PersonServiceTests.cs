@@ -24,6 +24,8 @@ public class PersonServiceTests
         var personService = new PersonService(mockRepository.Object, new PersonValidator());
         var result = personService.GetPerson(personId);
 
+        mockRepository.Verify(r => r.GetById(personId), Times.Once);
+
         Assert.Equal(result?.Id, personId);
         Assert.Equivalent(result, testPeople.Find(p => p.Id == personId));
     }
@@ -40,6 +42,8 @@ public class PersonServiceTests
         var personService = new PersonService(mockRepository.Object, new PersonValidator());
         var result = personService.GetPerson(personId);
 
+        mockRepository.Verify(r => r.GetById(personId), Times.Once);
+
         Assert.Null(result);
     }
 
@@ -53,11 +57,8 @@ public class PersonServiceTests
         var personService = new PersonService(mockRepository.Object, new PersonValidator());
         var result = personService.GetPeople();
 
-        Assert.Equal(result.Count(), testPeople.Count);
-    }
+        mockRepository.Verify(r => r.GetAll(), Times.Once);
 
-    [Fact]
-    public void AddPerson_InvalidData_Throws()
-    {
+        Assert.Equal(result.Count(), testPeople.Count);
     }
 }
