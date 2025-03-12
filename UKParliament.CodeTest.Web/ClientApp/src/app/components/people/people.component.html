@@ -3,7 +3,7 @@
     <div class="col-sm order-2 order-md-1 col-sm-12 col-md-6">
       @if (people) {
         @for (person of people; track person) {
-            <a class="card" (click)="handleSelect(person)">
+            <div class="card" role="button" (click)="handleSelect(person)">
                 <div class="card-inner">
                   <div class="content">
                     <div class="primary-info">{{person.firstName}} {{person.lastName}}</div>
@@ -17,7 +17,7 @@
                     </div>
                   </div>
                 </div>
-              </a>
+              </div>
         }
       }
     </div>
